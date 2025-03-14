@@ -4,7 +4,7 @@ import socket
 host = "verbal-sleep.picoctf.net"
 port = 58075
 
-hex_chars = "0123456789abcdef"
+hex_chars = "0123456789abcdefghijklmnopqrstuvwxyz"
 
 for salt_chars in itertools.product(hex_chars, repeat=2):
     salt = "".join(salt_chars)
