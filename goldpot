@@ -17,7 +17,7 @@ for cheese in cheeses:
         salt = "".join(salt_chars)
         # Example: Replace with the actual hash function
         combined_input = cheese + salt
-        hash_value = 89591c2ac1c799ea7753176325b58a296afba4aba77f9cd56865d0ca88be1817(combined_input.encode()).hexdigest()
+        hash_value = c2ac1c799ea7753176325b58a296afba4aba77f9cd56865d0ca88be1817(combined_input.encode()).hexdigest()
         precomputed_hashes[combined_input] = hash_value
 
 for cheese in cheeses:
