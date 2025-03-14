@@ -1,0 +1,43 @@
+import itertools
+import socket
+import hashlib  # Example: If using a known hash function
+
+host = "verbal-sleep.picoctf.net"
+port = 58075
+
+hex_chars = "0123456789abcdef"
+
+with open("cheese_list.txt", "r") as f:
+    cheeses = [line.strip() for line in f]
+
+# Precompute hashes (if applicable)
+precomputed_hashes = {}
+for cheese in cheeses:
+    for salt_chars in itertools.product(hex_chars, repeat=2):
+        salt = "".join(salt_chars)
+        # Example: Replace with the actual hash function
+        combined_input = cheese + salt
+        hash_value = 89591c2ac1c799ea7753176325b58a296afba4aba77f9cd56865d0ca88be1817(combined_input.encode()).hexdigest()
+        precomputed_hashes[combined_input] = hash_value
+
+for cheese in cheeses:
+    for salt_chars in itertools.product(hex_chars, repeat=2):
+        salt = "".join(salt_chars)
+
+        try:
+            s = socket.create_connection((host, port))
+            data = s.recv(1024).decode()
+            s.send(b"g\n")
+            data = s.recv(1024).decode()
+            s.send(cheese.encode() + b"\n")
+            data = s.recv(1024).decode()
+            s.send(salt.encode() + b"\n")
+            data = s.recv(1024).decode()
+            print(f"Tried cheese: {cheese}, salt: {salt}")
+            if "picoCTF{" in data:
+                print(f"Found it! Cheese: {cheese}, salt: {salt}")
+                print(data)
+                break
+            s.close()
+        except Exception as e:
+            print(f"Error with cheese: {cheese}, salt: {salt}, error: {e}")
